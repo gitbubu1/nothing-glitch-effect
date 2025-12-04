@@ -1,0 +1,91 @@
+:root {
+    --bg-color: #050505;
+    --text-color: #ffffff;
+    --corner-size: 20px; /* Size of the cut corner */
+    --border-width: 2px;
+}
+
+@font-face {
+  font-family: myFont; /* set name */
+  src: url(./ndot-47-inspired-by-nothing.otf); /* url of the font */
+}
+
+
+body {
+    background-color: var(--bg-color);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: myFont; 
+    overflow: hidden;
+}
+
+/* --- The Angular Border Container --- */
+.pixel-border {
+    position: relative;
+    background: var(--text-color); /* This acts as the border color */
+    padding: var(--border-width);  /* This creates the border thickness */
+    
+    /* Cut the Top-Left and Bottom-Right corners */
+    clip-path: polygon(
+        var(--corner-size) 0, 
+        100% 0, 
+        100% calc(100% - var(--corner-size)), 
+        calc(100% - var(--corner-size)) 100%, 
+        0 100%, 
+        0 var(--corner-size)
+    );
+    
+    /* Optional: Slight hover lift */
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.pixel-border:hover {
+    transform: translateY(-3px);
+}
+
+/* --- The Inner Black Box --- */
+.pixel-inner {
+    background: var(--bg-color); /* Matches body bg to look hollow */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 60px; /* Spacing around text */
+    box-sizing: border-box;
+
+    /* Must match the parent clip-path to look correct */
+    clip-path: polygon(
+        var(--corner-size) 0, 
+        100% 0, 
+        100% calc(100% - var(--corner-size)), 
+        calc(100% - var(--corner-size)) 100%, 
+        0 100%, 
+        0 var(--corner-size)
+    );
+}
+
+/* --- The Text Styling --- */
+.glitch {
+    color: var(--text-color);
+    font-size: 5rem;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    user-select: none; /* Prevents highlighting */
+    white-space: nowrap; /* Keeps text on one line */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .glitch {
+        font-size: 2.5rem;
+    }
+    .pixel-inner {
+        padding: 15px 30px;
+    }
+}
